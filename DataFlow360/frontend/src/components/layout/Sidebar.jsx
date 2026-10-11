@@ -1,0 +1,11 @@
+import { BarChart3, Database, Layers3, Menu, Settings, X, Workflow, ShieldCheck, Terminal, ScrollText, FileBarChart, FileSpreadsheet, GitBranch } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+const links = [{ to: '/', label: 'Overview', icon: BarChart3 }, { to: '/csv', label: 'CSV Data Lab', icon: FileSpreadsheet }, { to: '/lineage', label: 'Data Lineage', icon: GitBranch }, { to: '/bronze', label: 'Bronze Data', icon: Database }, { to: '/silver', label: 'Silver Data', icon: Layers3 }, { to: '/gold', label: 'Gold Analytics', icon: BarChart3 }, { to: '/etl', label: 'ETL Pipeline', icon: Workflow }, { to: '/quality', label: 'Data Quality', icon: ShieldCheck }, { to: '/sql', label: 'SQL Editor', icon: Terminal }, { to: '/logs', label: 'ETL Logs', icon: ScrollText }, { to: '/reports', label: 'Reports', icon: FileBarChart }, { to: '/settings', label: 'Settings', icon: Settings }];
+export default function Sidebar({ open, setOpen }) {
+    const { user } = useAuth(); const visibleLinks = links.filter(link => user?.role !== 'VIEWER' || ['/', '/gold', '/reports', '/settings'].includes(link.to)); return <><button className="fixed left-4 top-4 z-30 rounded-lg border border-border bg-panel p-2 lg:hidden" onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</button>
+        <aside className={`fixed inset-y-0 left-0 z-20 w-64 border-r border-border bg-panel p-5 transition-transform lg:static lg:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}><div className="mb-10 flex items-center gap-3 text-lg font-bold"><span className="grid h-9 w-9 place-items-center rounded-lg bg-sky-400 text-slate-950"><Database size={20} /></span>DataFlow360</div>
+            <p className="mb-3 px-3 text-[11px] font-semibold uppercase tracking-widest text-slate-500">Workspace</p>
+            <nav className="space-y-2">{visibleLinks.map(({ to, label, icon: Icon }) => <NavLink key={to} to={to} onClick={() => setOpen(false)} className={({ isActive }) => `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium ${isActive ? 'bg-sky-400/10 text-sky-300' : 'text-slate-400 hover:bg-slate-800 hover:text-slate-100'}`}><Icon size={18} />
+                {label}</NavLink>)}</nav></aside></>;
+}
