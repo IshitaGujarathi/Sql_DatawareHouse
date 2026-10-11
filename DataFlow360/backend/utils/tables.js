@@ -1,0 +1,2 @@
+export const layers = { bronze: ['bronze_customers', 'bronze_orders', 'bronze_products', 'bronze_csv_records'], silver: ['silver_customers', 'silver_orders', 'silver_products', 'silver_csv_records'], gold: ['gold_daily_sales', 'gold_monthly_revenue', 'gold_customer_summary', 'gold_product_performance', 'gold_city_sales', 'gold_csv_dataset_summary'] };
+export const assertTable = (layer, table) => { if (!layers[layer]?.includes(table)) throw Object.assign(new Error('Invalid table name.'), { statusCode: 400 }); return table; };

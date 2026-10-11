@@ -1,0 +1,1 @@
+{"name":"dataflow360-backend","private":true,"version":"1.0.0","type":"module","scripts":{"dev":"nodemon server.js","start":"node server.js"},"dependencies":{"bcrypt":"latest","cors":"latest","dotenv":"latest","express":"latest","jsonwebtoken":"latest","mysql2":"latest"},"devDependencies":{"nodemon":"^1.14.10"}}

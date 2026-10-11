@@ -1,0 +1,3 @@
+import jwt from 'jsonwebtoken'; import AppError from '../utils/AppError.js';
+export function authenticate(request, _response, next) { const token = request.headers.authorization?.replace('Bearer ', ''); if (!token) return next(new AppError('Authentication required.', 401)); try { request.user = jwt.verify(token, process.env.JWT_SECRET); next(); } catch { next(new AppError('Invalid or expired token.', 401)); } }
+export const authorize = (...roles) => (request, _response, next) => roles.includes(request.user.role) ? next() : next(new AppError('You do not have permission for this action.', 403));
